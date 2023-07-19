@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export async function getFoods(sort = 'createdAt') {
-  const { data } = await axios.get('data/mock.json');
-  data.sort((a, b) => b[sort] - a[sort]);
-
+  const { data } = await axios.get(`https://learn.codeit.kr/3507/foods?order=${sort}`);
   return data;
 }
