@@ -11,6 +11,10 @@ export default function Foods() {
   const handleCalorie = () => {
     getFoods('calorie').then(setFoods);
   };
+  const handleDelete = id => {
+    setFoods(prev => prev.filter(food => food.id !== id));
+  };
+
   useEffect(() => {
     getFoods() //
       .then(setFoods);
@@ -21,7 +25,7 @@ export default function Foods() {
       <button onClick={handleNew}>최신순</button>
       <button onClick={handleCalorie}>칼로리순</button>
       <ul className={styles.foods}>
-        {foods && foods.map(food => <FoodItem key={food.id} food={food} />)}
+        {foods && foods.map(food => <FoodItem key={food.id} food={food} onDelete={handleDelete} />)}
       </ul>
     </>
   );
