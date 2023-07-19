@@ -1,4 +1,4 @@
-export function dateFormat(timestamp) {
+export function formatData(timestamp) {
   const date = new Date(timestamp);
 
   const y = date.getFullYear();

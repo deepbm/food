@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styles from './Foods.module.css';
 import { getFoods } from '../api/foods';
 import FoodItem from './FoodItem';
 
@@ -19,7 +20,9 @@ export default function Foods() {
     <>
       <button onClick={handleNew}>최신순</button>
       <button onClick={handleCalorie}>칼로리순</button>
-      <ul>{foods && foods.map(food => <FoodItem key={food.id} food={food} />)}</ul>
+      <ul className={styles.foods}>
+        {foods && foods.map(food => <FoodItem key={food.id} food={food} />)}
+      </ul>
     </>
   );
 }
