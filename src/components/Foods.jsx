@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import styles from './Foods.module.css';
 import { getFoods } from '../api/foods';
 import FoodItem from './FoodItem';
+import FoodForm from './FoodForm';
 
 const LIMIT = 10;
 
@@ -35,6 +36,7 @@ export default function Foods() {
 
   return (
     <>
+      <FoodForm />
       <button onClick={() => setSort('createdAt')}>최신순</button>
       <button onClick={() => setSort('calorie')}>칼로리순</button>
       <form onSubmit={handleSubmit}>

@@ -5,5 +5,5 @@ export function formatData(timestamp) {
   const m = date.getMonth();
   const d = date.getDate();
 
-  return `${y}년 ${m}월 ${d}일`;
+  return `${y}년 ${m + 1}월 ${d}일`;
 }
