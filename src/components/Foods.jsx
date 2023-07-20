@@ -8,14 +8,21 @@ const LIMIT = 10;
 
 export default function Foods() {
   const [sort, setSort] = useState('createdAt');
+  const [search, setSearch] = useState('');
+  const [keyword, setKeyword] = useState('');
   const handleDelete = id => {
     // setFoods(prev => prev.filter(food => food.id !== id));
+  };
+  const handleSubmit = e => {
+    e.preventDefault();
+    setKeyword(search);
+    setSearch('');
   };
 
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ['foods', sort],
-      queryFn: async ({ pageParam = '' }) => getFoods(sort, LIMIT, { pageParam }),
+      queryKey: ['foods', sort, keyword],
+      queryFn: async ({ pageParam = '' }) => getFoods(sort, LIMIT, search, { pageParam }),
       getNextPageParam: lastPage => lastPage.paging.nextCursor,
       select: data => ({
         pages: data?.pages.flatMap(page => page.foods),
@@ -30,6 +37,10 @@ export default function Foods() {
     <>
       <button onClick={() => setSort('createdAt')}>최신순</button>
       <button onClick={() => setSort('calorie')}>칼로리순</button>
+      <form onSubmit={handleSubmit}>
+        <input name='search' value={search} onChange={e => setSearch(e.target.value)} />
+        <button type='submit'>검색</button>
+      </form>
       <ul className={styles.foods}>
         {data.pages.map(food => (
           <FoodItem key={food.id} food={food} onDelete={handleDelete} />
