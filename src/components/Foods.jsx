@@ -11,6 +11,7 @@ export default function Foods() {
   const [sort, setSort] = useState('createdAt');
   const [search, setSearch] = useState('');
   const [keyword, setKeyword] = useState('');
+  const [editId, setEditId] = useState();
   const handleDelete = id => {
     // setFoods(prev => prev.filter(food => food.id !== id));
   };
@@ -44,9 +45,22 @@ export default function Foods() {
         <button type='submit'>검색</button>
       </form>
       <ul className={styles.foods}>
-        {data.pages.map(food => (
-          <FoodItem key={food.id} food={food} onDelete={handleDelete} />
-        ))}
+        {data.pages.map(food => {
+          if (food.id === editId) {
+            const initialFood = { ...food };
+            return (
+              <FoodForm
+                key={food.id}
+                initialFood={initialFood}
+                initialPreview={food.imgUrl}
+                onCancel={setEditId}
+                onEdit={setEditId}
+                isEditting={true}
+              />
+            );
+          }
+          return <FoodItem key={food.id} food={food} onEdit={setEditId} onDelete={handleDelete} />;
+        })}
       </ul>
       {hasNextPage && (
         <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import sanitize from '../utils/sanitize';
-import { addFood } from '../api/foods';
+import { addFood, updateFood } from '../api/foods';
 
-export default function FoodForm() {
-  const [form, setForm] = useState({});
+export default function FoodForm({ initialFood, initialPreview, onCancel, onEdit, isEditting }) {
+  const [form, setForm] = useState(initialFood || {});
   const [file, setFile] = useState();
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState(initialPreview || null);
   const fileRef = useRef();
   const queryClient = useQueryClient();
   const handleChange = e => {
@@ -27,20 +27,37 @@ export default function FoodForm() {
     mutationFn: addFood,
     onSuccess: () => queryClient.invalidateQueries(['foods']),
   });
+  const editFood = useMutation({
+    mutationFn: ({ id, formData }) => updateFood(id, formData),
+    onSuccess: () => queryClient.invalidateQueries(['foods']),
+  });
   const handleSubmit = e => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('imgFile', file);
     formData.append('title', form.title);
     formData.append('calorie', form.calorie);
     formData.append('content', form.content);
+    if (file) formData.append('imgFile', file);
 
-    addNewFood.mutate(formData, {
-      onSuccess: () => {
-        setForm({});
-        handleFileClear();
-      },
-    });
+    if (isEditting) {
+      editFood.mutate(
+        { id: form.id, formData },
+        {
+          onSuccess: () => {
+            setForm({});
+            handleFileClear();
+            onCancel();
+          },
+        }
+      );
+    } else {
+      addNewFood.mutate(formData, {
+        onSuccess: () => {
+          setForm({});
+          handleFileClear();
+        },
+      });
+    }
   };
 
   useEffect(() => {
@@ -64,7 +81,8 @@ export default function FoodForm() {
       <input name='title' value={form.title ?? ''} onChange={handleChange} />
       <input type='number' name='calorie' value={form.calorie ?? 0} onChange={handleChange} />
       <input name='content' value={form.content ?? ''} onChange={handleChange} />
-      <button disabled={addNewFood.isLoading}>확인</button>
+      <button onClick={onCancel}>취소</button>
+      <button disabled={addNewFood.isLoading || editFood.isLoading}>확인</button>
     </form>
   );
 }

@@ -22,3 +22,14 @@ export async function addFood(formData) {
       throw new Error('데이터를 생성하는데 실패했습니다.');
     });
 }
+
+export async function updateFood(id, formData) {
+  return axios
+    .put(`${BASE_URL}/foods/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    .then(res => res.data.food)
+    .catch(error => {
+      throw new Error('데이터를 수정하는데 실패했습니다.');
+    });
+}
