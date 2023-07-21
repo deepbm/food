@@ -33,3 +33,11 @@ export async function updateFood(id, formData) {
       throw new Error('데이터를 수정하는데 실패했습니다.');
     });
 }
+
+export async function deleteFood(id) {
+  return axios
+    .delete(`${BASE_URL}/foods/${id}`) //
+    .catch(error => {
+      throw new Error('데이터를 삭제하는데 실패했습니다.');
+    });
+}

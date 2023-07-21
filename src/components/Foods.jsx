@@ -12,9 +12,6 @@ export default function Foods() {
   const [search, setSearch] = useState('');
   const [keyword, setKeyword] = useState('');
   const [editId, setEditId] = useState();
-  const handleDelete = id => {
-    // setFoods(prev => prev.filter(food => food.id !== id));
-  };
   const handleSubmit = e => {
     e.preventDefault();
     setKeyword(search);
@@ -59,7 +56,7 @@ export default function Foods() {
               />
             );
           }
-          return <FoodItem key={food.id} food={food} onEdit={setEditId} onDelete={handleDelete} />;
+          return <FoodItem key={food.id} food={food} onEdit={setEditId} />;
         })}
       </ul>
       {hasNextPage && (
