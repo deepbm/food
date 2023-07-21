@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import sanitize from '../utils/sanitize';
 import { addFood, updateFood } from '../api/foods';
+import useTranslate from '../hooks/useTranslate';
 
 export default function FoodForm({ initialFood, initialPreview, onCancel, onEdit, isEditting }) {
   const [form, setForm] = useState(initialFood || {});
@@ -9,6 +10,7 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, onEdit
   const [preview, setPreview] = useState(initialPreview || null);
   const fileRef = useRef();
   const queryClient = useQueryClient();
+  const t = useTranslate();
   const handleChange = e => {
     const { name, type, value, files } = e.target;
     if (name === 'file') {
@@ -76,13 +78,24 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, onEdit
       {preview && <img src={preview} alt='이미지 미리보기' />}
       <input ref={fileRef} type='file' name='file' onChange={handleChange} />
       <button type='button' onClick={handleFileClear}>
-        초기화
+        {t('reset button')}
       </button>
-      <input name='title' value={form.title ?? ''} onChange={handleChange} />
-      <input type='number' name='calorie' value={form.calorie ?? 0} onChange={handleChange} />
+      <input
+        name='title'
+        value={form.title ?? ''}
+        onChange={handleChange}
+        placeholder={t('title placeholder')}
+      />
+      <input
+        type='number'
+        name='calorie'
+        value={form.calorie ?? 0}
+        onChange={handleChange}
+        placeholder={t('calorie placeholder')}
+      />
       <input name='content' value={form.content ?? ''} onChange={handleChange} />
-      <button onClick={onCancel}>취소</button>
-      <button disabled={addNewFood.isLoading || editFood.isLoading}>확인</button>
+      <button onClick={onCancel}>{t('cancel button')}</button>
+      <button disabled={addNewFood.isLoading || editFood.isLoading}>{t('confirm button')}</button>
     </form>
   );
 }

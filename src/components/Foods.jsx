@@ -4,10 +4,12 @@ import styles from './Foods.module.css';
 import { getFoods } from '../api/foods';
 import FoodItem from './FoodItem';
 import FoodForm from './FoodForm';
+import useTranslate from '../hooks/useTranslate';
 
 const LIMIT = 10;
 
 export default function Foods() {
+  const t = useTranslate();
   const [sort, setSort] = useState('createdAt');
   const [search, setSearch] = useState('');
   const [keyword, setKeyword] = useState('');
@@ -35,8 +37,8 @@ export default function Foods() {
   return (
     <>
       <FoodForm />
-      <button onClick={() => setSort('createdAt')}>최신순</button>
-      <button onClick={() => setSort('calorie')}>칼로리순</button>
+      <button onClick={() => setSort('createdAt')}>{t('sort by newest')}</button>
+      <button onClick={() => setSort('calorie')}>{t('sort by calorie')}</button>
       <form onSubmit={handleSubmit}>
         <input name='search' value={search} onChange={e => setSearch(e.target.value)} />
         <button type='submit'>검색</button>
@@ -61,7 +63,7 @@ export default function Foods() {
       </ul>
       {hasNextPage && (
         <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
-          더보기
+          {t('load more')}
         </button>
       )}
       <p>{isFetching && !isFetchingNextPage ? '불러오는중...' : null}</p>

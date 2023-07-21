@@ -3,11 +3,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './FoodItem.module.css';
 import { formatData } from '../utils/dateFormat';
 import { deleteFood } from '../api/foods';
+import useTranslate from '../hooks/useTranslate';
 
 export default function FoodItem({
   food: { id, imgUrl, title, calorie, content, createdAt },
   onEdit,
 }) {
+  const t = useTranslate();
   const queryClient = useQueryClient();
   const handleEdit = () => onEdit(id);
   const removeFood = useMutation({
@@ -25,8 +27,8 @@ export default function FoodItem({
       <p>{calorie}</p>
       <p>{content}</p>
       <p>{formatData(createdAt)}</p>
-      <button onClick={handleEdit}>수정</button>
-      <button onClick={handleDelete}>삭제</button>
+      <button onClick={handleEdit}>{t('edit button')}</button>
+      <button onClick={handleDelete}>{t('delete button')}</button>
     </li>
   );
 }
