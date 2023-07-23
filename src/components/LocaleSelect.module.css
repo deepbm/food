@@ -1,0 +1,9 @@
+.LocaleSelect {
+  margin-left: 24px;
+  padding: 12px 8px;
+  background-color: transparent;
+  border: 1px solid #eaf3ea;
+  border-radius: 4px;
+  outline: none;
+  color: #eaf3ea;
+}

@@ -1,0 +1,12 @@
+.Filter__sort__btn {
+  padding: 10px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Filter__sort__btn.selected {
+  color: #2c9631;
+  font-weight: bold;
+}

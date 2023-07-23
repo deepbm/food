@@ -21,14 +21,26 @@ export default function FoodItem({
   };
 
   return (
-    <li className={styles.foods__item}>
-      <img src={imgUrl} alt={title} />
-      <p>{title}</p>
-      <p>{calorie}</p>
-      <p>{content}</p>
-      <p>{formatData(createdAt)}</p>
-      <button onClick={handleEdit}>{t('edit button')}</button>
-      <button onClick={handleDelete}>{t('delete button')}</button>
-    </li>
+    <div className={styles.FoodItem__container}>
+      <img className={styles.FoodItem__preview} src={imgUrl} alt={title} />
+      <div className={styles.FoodItem__info}>
+        <div className={styles.FoodItem__info__top}>
+          <p className={styles.FoodItem__info__title}>{title}</p>
+          <p className={styles.FoodItem__info__calorie}>{calorie}kcal</p>
+        </div>
+        <p className={styles.FoodItem__info__content}>{content}</p>
+        <div className={styles.FoodItem__info__bottom}>
+          <p className={styles.FoodItem__info__date}>{formatData(createdAt)}</p>
+          <div className={styles.FoodItem__info__btns}>
+            <button className={styles.FoodItem__btn__edit} onClick={handleEdit}>
+              {t('edit button')}
+            </button>
+            <button className={styles.FoodItem__btn__delete} onClick={handleDelete}>
+              {t('delete button')}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

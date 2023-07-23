@@ -1,0 +1,16 @@
+.Footer {
+  margin-top: 250px;
+  padding: 4px;
+  background-color: #4caf50;
+}
+
+.Footer__container {
+  display: flex;
+  align-items: center;
+  padding: 28px 0 30px;
+}
+
+.Footer__container > .icon {
+  color: #eaf3ea;
+  font-size: 24px;
+}

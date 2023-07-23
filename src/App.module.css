@@ -1,0 +1,13 @@
+.container {
+  padding: 20px;
+  width: 100%;
+}
+
+.FoodForm__container {
+  margin: 60px 0 90px;
+  padding: 22px;
+  border-radius: 16px;
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 9px 0px rgba(100, 126, 118, 0.09);
+  box-shadow: 0px 0px 9px 0px rgba(100, 126, 118, 0.09);
+}

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { BsSearch } from 'react-icons/bs';
 import styles from './Foods.module.css';
+import './Foods.css';
 import { getFoods } from '../api/foods';
 import FoodItem from './FoodItem';
 import FoodForm from './FoodForm';
 import useTranslate from '../hooks/useTranslate';
 
 const LIMIT = 10;
+const sortArr = ['createdAt', 'calorie'];
 
 export default function Foods() {
   const t = useTranslate();
-  const [sort, setSort] = useState('createdAt');
+  const [sort, setSort] = useState(sortArr[0]);
   const [search, setSearch] = useState('');
   const [keyword, setKeyword] = useState('');
   const [editId, setEditId] = useState();
@@ -36,33 +39,55 @@ export default function Foods() {
 
   return (
     <>
-      <FoodForm />
-      <button onClick={() => setSort('createdAt')}>{t('sort by newest')}</button>
-      <button onClick={() => setSort('calorie')}>{t('sort by calorie')}</button>
-      <form onSubmit={handleSubmit}>
-        <input name='search' value={search} onChange={e => setSearch(e.target.value)} />
-        <button type='submit'>검색</button>
-      </form>
-      <ul className={styles.foods}>
+      <div className={styles.Filter}>
+        <form className={styles.Filter__search} onSubmit={handleSubmit}>
+          <input name='search' value={search} onChange={e => setSearch(e.target.value)} />
+          <button className={styles.Filter__search__btn} type='submit'>
+            <BsSearch className={styles.Filter__search__icon} />
+          </button>
+        </form>
+        <div className={styles.Filter__sort}>
+          {sortArr.map((value, index) => (
+            <button
+              key={index}
+              className={`Filter__sort__btn${value === sort ? ' selected' : ''}`}
+              onClick={() => setSort(value)}
+            >
+              {t(`sort by ${value}`)}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <ul className={styles.Foods}>
         {data.pages.map(food => {
           if (food.id === editId) {
             const initialFood = { ...food };
             return (
-              <FoodForm
-                key={food.id}
-                initialFood={initialFood}
-                initialPreview={food.imgUrl}
-                onCancel={setEditId}
-                onEdit={setEditId}
-                isEditting={true}
-              />
+              <li key={food.id} className={styles.Foods__item}>
+                <FoodForm
+                  initialFood={initialFood}
+                  initialPreview={food.imgUrl}
+                  onCancel={setEditId}
+                  onEdit={setEditId}
+                  isEditting={true}
+                />
+              </li>
             );
           }
-          return <FoodItem key={food.id} food={food} onEdit={setEditId} />;
+          return (
+            <li key={food.id} className={styles.Foods__item}>
+              <FoodItem key={food.id} food={food} onEdit={setEditId} />
+            </li>
+          );
         })}
       </ul>
       {hasNextPage && (
-        <button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
+        <button
+          className={styles.Foods__btn__loadMore}
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage || isFetchingNextPage}
+        >
           {t('load more')}
         </button>
       )}

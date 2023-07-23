@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { IoCloseCircleSharp } from 'react-icons/io5';
+import styles from './FoodForm.module.css';
+import placeholderImg from '../img/file_preview.png';
 import sanitize from '../utils/sanitize';
 import { addFood, updateFood } from '../api/foods';
 import useTranslate from '../hooks/useTranslate';
 
-export default function FoodForm({ initialFood, initialPreview, onCancel, onEdit, isEditting }) {
+export default function FoodForm({ initialFood, initialPreview, onCancel, isEditting }) {
   const [form, setForm] = useState(initialFood || {});
   const [file, setFile] = useState();
   const [preview, setPreview] = useState(initialPreview || null);
@@ -74,28 +77,64 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, onEdit
   }, [file]);
 
   return (
-    <form onSubmit={handleSubmit}>
-      {preview && <img src={preview} alt='이미지 미리보기' />}
-      <input ref={fileRef} type='file' name='file' onChange={handleChange} />
-      <button type='button' onClick={handleFileClear}>
-        {t('reset button')}
-      </button>
-      <input
-        name='title'
-        value={form.title ?? ''}
-        onChange={handleChange}
-        placeholder={t('title placeholder')}
-      />
-      <input
-        type='number'
-        name='calorie'
-        value={form.calorie ?? 0}
-        onChange={handleChange}
-        placeholder={t('calorie placeholder')}
-      />
-      <input name='content' value={form.content ?? ''} onChange={handleChange} />
-      <button onClick={onCancel}>{t('cancel button')}</button>
-      <button disabled={addNewFood.isLoading || editFood.isLoading}>{t('confirm button')}</button>
+    <form className={styles.FoodForm} onSubmit={handleSubmit}>
+      <div className={styles.FoodForm__preview}>
+        <img
+          className={styles.FoodForm__preview__img}
+          src={preview || placeholderImg}
+          alt='이미지 미리보기'
+        />
+        <input
+          className={styles.FoodForm__preview__file}
+          ref={fileRef}
+          type='file'
+          name='file'
+          onChange={handleChange}
+        />
+        {preview && (
+          <button
+            className={styles.FoodForm__preview__clear}
+            type='button'
+            onClick={handleFileClear}
+          >
+            <IoCloseCircleSharp className={styles.FoodForm__preview__icon} />
+          </button>
+        )}
+      </div>
+      <div className={styles.FoodForm__info}>
+        <div className={styles.FoodForm__info__top}>
+          <input
+            className={styles.FoodForm__input__title}
+            name='title'
+            value={form.title ?? ''}
+            onChange={handleChange}
+            placeholder={t('title placeholder')}
+          />
+          <input
+            className={styles.FoodForm__input__calorie}
+            type='number'
+            name='calorie'
+            value={form.calorie ?? 0}
+            onChange={handleChange}
+            placeholder={t('calorie placeholder')}
+          />
+          <button className={styles.FoodForm__btn__cancel} onClick={onCancel}>
+            {t('cancel button')}
+          </button>
+          <button
+            className={styles.FoodForm__btn__submit}
+            disabled={addNewFood.isLoading || editFood.isLoading}
+          >
+            {t('confirm button')}
+          </button>
+        </div>
+        <textarea
+          className={styles.FoodForm__textarea__content}
+          name='content'
+          value={form.content ?? ''}
+          onChange={handleChange}
+        />
+      </div>
     </form>
   );
 }
