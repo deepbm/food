@@ -26,7 +26,7 @@ export default function Foods() {
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } =
     useInfiniteQuery({
       queryKey: ['foods', sort, keyword],
-      queryFn: async ({ pageParam = '' }) => getFoods(sort, LIMIT, search, { pageParam }),
+      queryFn: async ({ pageParam = '' }) => getFoods(sort, LIMIT, keyword, { pageParam }),
       getNextPageParam: lastPage => lastPage.paging.nextCursor,
       select: data => ({
         pages: data?.pages.flatMap(page => page.foods),
@@ -52,6 +52,7 @@ export default function Foods() {
               key={index}
               className={`Filter__sort__btn${value === sort ? ' selected' : ''}`}
               onClick={() => setSort(value)}
+              disabled={keyword}
             >
               {t(`sort by ${value}`)}
             </button>

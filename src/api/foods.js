@@ -4,11 +4,10 @@ const BASE_URL = 'https://learn.codeit.kr/api';
 
 export async function getFoods(sort = 'createdAt', limit = 10, keyword, { pageParam }) {
   let fetchUrl = `${BASE_URL}/foods?order=${sort}&limit=${limit}`;
-  if (keyword) {
+  if (pageParam) {
+    fetchUrl = `${BASE_URL}/foods?cursor=${pageParam}&limit=${limit}&search=${keyword}`;
+  } else if (keyword) {
     fetchUrl = `${BASE_URL}/foods?limit=2&search=${keyword}`;
-    if (pageParam) {
-      fetchUrl = `${BASE_URL}/foods?cursor=${pageParam}&limit=${limit}&search=${keyword}`;
-    }
   }
   const { data } = await axios.get(fetchUrl);
   return data;
