@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { IoCloseCircleSharp } from 'react-icons/io5';
+import { AiFillCloseSquare } from 'react-icons/ai';
 import styles from './FoodForm.module.css';
 import placeholderImg from '../img/file_preview.png';
 import sanitize from '../utils/sanitize';
@@ -38,30 +38,38 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, isEdit
   });
   const handleSubmit = e => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('title', form.title);
-    formData.append('calorie', form.calorie);
-    formData.append('content', form.content);
-    if (file) formData.append('imgFile', file);
+    if (!form.title) {
+      alert('이름을 입력해주세요.');
+    } else if (!form.calorie) {
+      alert('칼로리를 입력해주세요.');
+    } else if (!form.content) {
+      alert('내용을 입력해주세요.');
+    } else {
+      const formData = new FormData();
+      formData.append('title', form.title);
+      formData.append('calorie', form.calorie);
+      formData.append('content', form.content);
+      if (file) formData.append('imgFile', file);
 
-    if (isEditting) {
-      editFood.mutate(
-        { id: form.id, formData },
-        {
+      if (isEditting) {
+        editFood.mutate(
+          { id: form.id, formData },
+          {
+            onSuccess: () => {
+              setForm({});
+              handleFileClear();
+              onCancel();
+            },
+          }
+        );
+      } else {
+        addNewFood.mutate(formData, {
           onSuccess: () => {
             setForm({});
             handleFileClear();
-            onCancel();
           },
-        }
-      );
-    } else {
-      addNewFood.mutate(formData, {
-        onSuccess: () => {
-          setForm({});
-          handleFileClear();
-        },
-      });
+        });
+      }
     }
   };
 
@@ -97,7 +105,7 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, isEdit
             type='button'
             onClick={handleFileClear}
           >
-            <IoCloseCircleSharp className={styles.FoodForm__preview__icon} />
+            <AiFillCloseSquare className={styles.FoodForm__preview__icon} />
           </button>
         )}
       </div>
@@ -118,9 +126,11 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, isEdit
             onChange={handleChange}
             placeholder={t('calorie placeholder')}
           />
-          <button className={styles.FoodForm__btn__cancel} onClick={onCancel}>
-            {t('cancel button')}
-          </button>
+          {isEditting && (
+            <button className={styles.FoodForm__btn__cancel} onClick={onCancel}>
+              {t('cancel button')}
+            </button>
+          )}
           <button
             className={styles.FoodForm__btn__submit}
             disabled={addNewFood.isLoading || editFood.isLoading}

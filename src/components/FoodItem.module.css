@@ -3,7 +3,7 @@
 }
 
 .FoodItem__preview {
-  margin-right: 15px;
+  margin-right: 30px;
   width: 150px;
   height: 150px;
   border-radius: 12px;
@@ -76,21 +76,29 @@
 
 .FoodItem__btn__edit {
   margin-right: 8px;
-  padding: 6px 12px 4px;
+  padding: 6px 14px 4px;
   border-radius: 4px;
   border: 1px solid #c8dad4;
   background: transparent;
-  font-size: 12px;
+  font-size: 14px;
   color: #7f8e89;
   cursor: pointer;
 }
 
+.FoodItem__btn__edit:hover {
+  transform: scale(1.1);
+}
+
 .FoodItem__btn__delete {
-  padding: 6px 12px 4px;
+  padding: 6px 14px 4px;
   border-radius: 4px;
   border: 1px solid #e5cdcd;
   background: transparent;
-  font-size: 12px;
-  color: #b18181;
+  font-size: 14px;
+  color: #ce2c2c;
   cursor: pointer;
+}
+
+.FoodItem__btn__delete:hover {
+  transform: scale(1.1);
 }

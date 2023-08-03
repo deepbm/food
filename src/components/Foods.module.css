@@ -9,6 +9,10 @@
   position: relative;
 }
 
+.Filter__search > input {
+  width: 280px;
+}
+
 .Filter__search__btn {
   position: absolute;
   top: 12px;
@@ -40,13 +44,28 @@
   margin-bottom: 30px;
 }
 
-.Foods__btn__loadMore {
-  padding: 20px;
-  border: none;
-  border-radius: 16px;
-  background: #f2f6f2;
+.Foods__loadMore__container {
+  margin-top: 28px;
   width: 100%;
-  color: #4caf50;
-  font-size: 18px;
+  text-align: center;
+  color: #a0a8a0;
+}
+
+.Foods__loadMore__text {
+  margin: 0;
+  margin-bottom: -6px;
+  font-weight: bold;
+}
+
+.Foods__btn__loadMore {
+  border: none;
+  background: transparent;
+  color: #a0a8a0;
+  font-size: 32px;
+  font-weight: bold;
   cursor: pointer;
+}
+
+.Foods__btn__loadMore:hover {
+  transform: scale(1.1);
 }

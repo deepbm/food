@@ -1,16 +1,29 @@
 .Footer {
-  margin-top: 250px;
-  padding: 4px;
+  margin-top: 90px;
+  padding: 4px 10%;
   background-color: #4caf50;
 }
 
 .Footer__container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 28px 0 30px;
 }
 
-.Footer__container > .icon {
+.Footer__logo {
+  display: flex;
+  align-items: center;
+}
+
+.Footer__logo > .icon {
+  margin-right: 12px;
+  color: #eaf3ea;
+  font-size: 24px;
+}
+
+.Footer__logo > .text {
+  font-family: 'Sriracha', cursive;
   color: #eaf3ea;
   font-size: 24px;
 }

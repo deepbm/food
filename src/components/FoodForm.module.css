@@ -3,6 +3,7 @@
 }
 
 .FoodForm__preview {
+  flex-shrink: 0;
   position: relative;
   margin-right: 20px;
   background: #f6f6f6;
@@ -33,17 +34,17 @@
 
 .FoodForm__preview__clear {
   position: absolute;
-  top: 6px;
-  right: 4px;
+  top: -4px;
+  right: -4px;
+  padding: 0;
   background: transparent;
   border: none;
-  width: 40px;
-  height: 40px;
+  opacity: 0.5;
   cursor: pointer;
 }
 
 .FoodForm__preview__icon {
-  font-size: 24px;
+  font-size: 40px;
 }
 
 .FoodForm__info {

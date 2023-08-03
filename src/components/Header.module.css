@@ -1,13 +1,19 @@
 .Header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 75px;
+  padding: 18px 0;
   border-bottom: 1px solid #dae7e3;
   background-color: #fff;
+  text-align: center;
 }
 
 .Header > .icon {
+  font-size: 32px;
+  color: #2c9631;
+}
+
+.Header > .text {
+  margin: 0;
+  margin-top: -12px;
+  font-family: 'Sriracha', cursive;
   font-size: 24px;
   color: #2c9631;
 }

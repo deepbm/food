@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { BsSearch } from 'react-icons/bs';
+import { IoIosArrowDown } from 'react-icons/io';
 import styles from './Foods.module.css';
 import './Foods.css';
 import { getFoods } from '../api/foods';
@@ -84,13 +85,16 @@ export default function Foods() {
         })}
       </ul>
       {hasNextPage && (
-        <button
-          className={styles.Foods__btn__loadMore}
-          onClick={() => fetchNextPage()}
-          disabled={!hasNextPage || isFetchingNextPage}
-        >
-          {t('load more')}
-        </button>
+        <div className={styles.Foods__loadMore__container}>
+          <p className={styles.Foods__loadMore__text}>더 보기</p>
+          <button
+            className={styles.Foods__btn__loadMore}
+            onClick={() => fetchNextPage()}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            <IoIosArrowDown />
+          </button>
+        </div>
       )}
       <p>{isFetching && !isFetchingNextPage ? '불러오는중...' : null}</p>
     </>
