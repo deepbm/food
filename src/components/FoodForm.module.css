@@ -34,17 +34,19 @@
 
 .FoodForm__preview__clear {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: 0;
+  right: 0;
   padding: 0;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.1);
   border: none;
-  opacity: 0.5;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
 
 .FoodForm__preview__icon {
-  font-size: 40px;
+  font-size: 20px;
+  color: #fff;
 }
 
 .FoodForm__info {

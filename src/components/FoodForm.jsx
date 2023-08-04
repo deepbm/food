@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AiFillCloseSquare } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 import styles from './FoodForm.module.css';
 import placeholderImg from '../img/file_preview.png';
 import sanitize from '../utils/sanitize';
@@ -105,7 +105,7 @@ export default function FoodForm({ initialFood, initialPreview, onCancel, isEdit
             type='button'
             onClick={handleFileClear}
           >
-            <AiFillCloseSquare className={styles.FoodForm__preview__icon} />
+            <AiOutlineClose className={styles.FoodForm__preview__icon} />
           </button>
         )}
       </div>
